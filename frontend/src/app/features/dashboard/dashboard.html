@@ -1,0 +1,80 @@
+<div class="flex flex-col w-full">
+  <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg mb-space-xl">
+    <div class="flex flex-col">
+      <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-extrabold">Olá, Mariana!</h1>
+      <p class="font-body-md text-body-md text-on-surface-variant mt-1 font-medium">Acompanhe as ofertas em análise hoje</p>
+    </div>
+
+    <div class="flex items-center gap-space-sm flex-wrap sm:flex-nowrap">
+      <div class="relative flex items-center min-w-[280px] sm:min-w-[320px]">
+        <span class="material-symbols-outlined text-[19px] text-outline absolute left-4 pointer-events-none">search</span>
+        <input
+          (input)="aoBuscar($event)"
+          [value]="termo()"
+          class="w-full pl-11 pr-5 py-2.5 rounded-full bg-surface-container-lowest text-on-surface font-body-md text-body-md placeholder:text-outline shadow-[0_2px_12px_rgba(24,24,27,0.03)] focus:outline-none focus:shadow-[0_0_0_2px_rgba(0,88,190,0.25)] transition-all"
+          id="campaign-search"
+          placeholder="Buscar campanha ou creator..."
+          type="text"
+        />
+      </div>
+      <div class="relative">
+        <button
+          (click)="painelFiltros.set(!painelFiltros())"
+          class="inline-flex items-center gap-space-xs bg-on-background text-on-primary font-label-lg text-label-lg px-6 py-2.5 rounded-full hover:bg-inverse-surface transition-all duration-200 shadow-[0_2px_10px_rgba(24,28,33,0.1)] active:scale-[0.98]"
+          id="btn-filters"
+          type="button"
+        >
+          <span class="material-symbols-outlined text-[18px]">tune</span>
+          <span>Filtros</span>
+        </button>
+        @if (painelFiltros()) {
+          <div class="absolute right-0 top-12 z-30 w-48 bg-surface-container-lowest rounded-xl p-2 shadow-[0_8px_32px_-8px_rgba(24,28,33,0.25)] ring-1 ring-surface-container flex flex-col gap-1">
+            @for (opcao of ['all', 'critico', 'atencao', 'alinhado']; track opcao) {
+              <button
+                type="button"
+                (click)="definirFiltro($any(opcao))"
+                class="text-left px-3 py-2 rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors"
+                [class.bg-surface-container-low]="filtro() === opcao"
+              >
+                {{ opcao === 'all' ? 'Todos' : opcao === 'critico' ? 'Crítico' : opcao === 'atencao' ? 'Atenção' : 'Alinhado' }}
+              </button>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  @if (erroApi()) {
+    <div class="mb-space-lg rounded-2xl bg-error-container text-on-error-container px-space-lg py-space-md font-body-md">
+      {{ erroApi() }}
+    </div>
+  }
+
+  @if (metricas(); as metricas) {
+    <div class="grid grid-cols-12 gap-space-lg w-full">
+      <div class="col-span-12 xl:col-span-7">
+        <app-priority-alert [metricas]="metricas" (revisarCriticos)="revisarCriticos()" />
+      </div>
+      <div class="col-span-12 xl:col-span-5">
+        <app-alignment-metric [metricas]="metricas" />
+      </div>
+      <div class="col-span-12">
+        <app-inspection-queue
+          [campanhas]="resumos()"
+          [termo]="termo()"
+          [filtro]="filtro()"
+          (aoFiltrar)="definirFiltro($event)"
+          (abrir)="abrirCampanha($event)"
+        />
+      </div>
+    </div>
+  } @else {
+    <div class="rounded-[24px] bg-surface-container-lowest p-space-xl text-center shadow-sm">
+      <span class="material-symbols-outlined text-[28px] text-primary animate-spin">sync</span>
+      <p class="font-body-md text-body-md text-on-surface-variant mt-space-md">
+        Carregando dados do cockpit...
+      </p>
+    </div>
+  }
+</div>

@@ -1,0 +1,76 @@
+@if (carregando() && !campanha()) {
+  <div class="rounded-[24px] bg-surface-container-lowest p-space-xl text-center shadow-sm">
+    <span class="material-symbols-outlined text-[28px] text-primary animate-spin">sync</span>
+    <p class="font-body-md text-body-md text-on-surface-variant mt-space-md">Carregando evidências...</p>
+  </div>
+} @else if (campanha(); as campanha) {
+  <div class="flex flex-col w-full">
+    <div class="flex flex-col gap-space-sm mb-space-lg">
+      <a
+        [routerLink]="['/campanha', campanha.id]"
+        class="inline-flex items-center gap-1.5 text-on-surface-variant hover:text-primary transition-colors w-fit font-label-md text-label-md"
+      >
+        <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+        <span>Voltar para Diagnóstico da Campanha (#{{ campanha.id }})</span>
+      </a>
+
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md mt-space-xs">
+        <div class="flex flex-col">
+          <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+            Comparação de Evidências — #{{ campanha.id }}
+          </h1>
+          <p class="font-body-md text-body-md text-on-surface-variant mt-0.5 flex flex-wrap items-center gap-1">
+            <span>{{ campanha.creator }}</span>
+            <span class="text-outline-variant font-medium">(Creator)</span>
+            <span>•</span>
+            <span>{{ campanha.produtor }}</span>
+            <span class="text-outline-variant font-medium">(Produtor)</span>
+            <span>•</span>
+            <span class="text-on-surface font-semibold">{{ campanha.titulo }}</span>
+          </p>
+        </div>
+
+        <div class="flex items-center gap-space-sm flex-wrap">
+          <div
+            class="flex items-center gap-2 px-3.5 py-1.5 rounded-full shadow-sm"
+            [class]="campanha.nivel === 'critico' ? 'bg-error-container text-on-error-container' : campanha.nivel === 'atencao' ? 'bg-amber-100 text-amber-900' : 'bg-tertiary-fixed text-on-tertiary-fixed'"
+          >
+            <span class="material-symbols-outlined text-[16px]">{{ campanha.nivel === 'alinhado' ? 'verified' : 'warning' }}</span>
+            <span class="font-label-md text-label-md font-bold tracking-tight">
+              ICO {{ campanha.ico }}% • {{ campanha.nivel === 'critico' ? 'Incompatibilidade Crítica' : campanha.nivel === 'atencao' ? 'Atenção Moderada' : 'Alinhamento Confirmado' }}
+            </span>
+          </div>
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface font-label-md text-label-md">
+            <span
+              class="w-2 h-2 rounded-full"
+              [class.bg-primary-container]="status() === 'Em Deliberação'"
+              [class.bg-tertiary]="status() === 'Resolvido'"
+              [class.animate-pulse]="status() === 'Em Deliberação'"
+            ></span>
+            <span>Status: <strong>{{ status() }}</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch mb-space-xl">
+      <app-creator-evidence [evidencia]="campanha.evidencias.creator" />
+      <app-producer-evidence [evidencia]="campanha.evidencias.produtor" />
+      <app-buyer-evidence [evidencia]="campanha.evidencias.compradores" />
+    </div>
+
+    <app-decision-bar [campanhaId]="campanha.id" [status]="status()" (acao)="registrarAcao($event)" />
+  </div>
+} @else {
+  <div class="bg-surface-container-lowest rounded-[24px] p-space-xl text-center">
+    <h1 class="font-headline-md text-headline-md font-bold text-on-surface">
+      {{ erroApi() ? 'Não foi possível carregar as evidências' : 'Campanha não encontrada' }}
+    </h1>
+    @if (erroApi()) {
+      <p class="font-body-md text-body-md text-on-surface-variant mt-space-sm">{{ erroApi() }}</p>
+    }
+    <a routerLink="/" class="mt-space-md inline-flex items-center gap-2 font-label-lg text-label-lg text-primary hover:underline">
+      <span class="material-symbols-outlined text-[18px]">arrow_back</span>Voltar para o Dashboard
+    </a>
+  </div>
+}

@@ -1,0 +1,113 @@
+<aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest z-50 flex flex-col justify-between py-space-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+  <div class="flex flex-col gap-space-xl">
+    <div class="px-space-lg flex items-center gap-space-sm">
+      <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-headline-sm text-headline-sm font-bold shadow-[0_2px_8px_rgba(0,88,190,0.2)]">YS</div>
+      <div class="flex flex-col">
+        <span class="font-headline-sm text-headline-sm font-bold text-on-surface tracking-tight">YouShop</span>
+        <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Operações</span>
+      </div>
+    </div>
+    <nav class="flex flex-col gap-space-xs px-space-md" data-active-classes="bg-tertiary-fixed text-on-tertiary-fixed font-semibold rounded-full">
+      <a
+        routerLink="/"
+        [class.bg-tertiary-fixed]="rotaAtual('dashboard')"
+        [class.text-on-tertiary-fixed]="rotaAtual('dashboard')"
+        [class.font-semibold]="rotaAtual('dashboard')"
+        [class.rounded-full]="rotaAtual('dashboard')"
+        [class.text-on-surface-variant]="!rotaAtual('dashboard')"
+        class="flex items-center gap-space-sm px-space-md py-space-sm rounded-full transition-all duration-200 hover:bg-surface-container-low hover:text-on-surface"
+      >
+        <span class="material-symbols-outlined text-[20px]">grid_view</span>
+        <span class="font-label-lg text-label-lg">Dashboard</span>
+      </a>
+      <a
+        routerLink="/"
+        fragment="fila"
+        [class.bg-tertiary-fixed]="rotaAtual('campanhas')"
+        [class.text-on-tertiary-fixed]="rotaAtual('campanhas')"
+        [class.font-semibold]="rotaAtual('campanhas')"
+        [class.rounded-full]="rotaAtual('campanhas')"
+        [class.text-on-surface-variant]="!rotaAtual('campanhas')"
+        class="flex items-center gap-space-sm px-space-md py-space-sm rounded-full transition-all duration-200 hover:bg-surface-container-low hover:text-on-surface"
+      >
+        <span class="material-symbols-outlined text-[20px]">campaign</span>
+        <span class="font-label-lg text-label-lg">Campanhas &amp; Fila</span>
+      </a>
+      <button type="button" title="Em preparação" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-full text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all duration-200">
+        <span class="material-symbols-outlined text-[20px]">bar_chart</span>
+        <span class="font-label-lg text-label-lg">Relatórios</span>
+      </button>
+      <button type="button" title="Em preparação" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-full text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all duration-200">
+        <span class="material-symbols-outlined text-[20px]">settings</span>
+        <span class="font-label-lg text-label-lg">Configurações</span>
+      </button>
+    </nav>
+  </div>
+  <div class="px-space-md">
+    <div class="bg-surface-container-low rounded-xl p-space-sm flex items-center justify-between">
+      <div class="flex items-center gap-space-sm">
+        <div class="relative flex items-center justify-center">
+          <div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+            <span class="material-symbols-outlined text-[20px]">person</span>
+          </div>
+          <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-tertiary-fixed-dim ring-2 ring-surface-container-low"></span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Analista Ops</span>
+          <span class="font-label-sm text-label-sm text-tertiary flex items-center gap-1 leading-tight">
+            <span class="w-1.5 h-1.5 rounded-full bg-tertiary inline-block"></span>Ativo
+          </span>
+        </div>
+      </div>
+      <button aria-label="Sair" class="text-on-surface-variant hover:text-on-surface p-1 transition-colors" type="button">
+        <span class="material-symbols-outlined text-[18px]">logout</span>
+      </button>
+    </div>
+  </div>
+</aside>
+
+<div class="pl-64 flex flex-col min-h-screen bg-surface">
+  <header class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(0,0,0,0.03)]">
+    <div class="w-full h-full px-space-xl flex items-center justify-between">
+      <div class="flex items-center gap-space-sm">
+        <span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">Sessão Operacional</span>
+        <span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+        <span class="font-label-md text-label-md text-on-surface font-medium">YouShop Core v2.4</span>
+      </div>
+      <div class="flex items-center gap-space-md">
+        <div class="flex items-center gap-space-xs bg-surface-container-low rounded-full px-space-md py-1.5 text-on-surface-variant">
+          <span class="material-symbols-outlined text-[18px]">search</span>
+          <span class="font-body-sm text-body-sm text-outline">Buscar SKU, pedido ou fila...</span>
+        </div>
+        <button aria-label="Notificações" class="w-9 h-9 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" type="button">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+        </button>
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+          <span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative pt-16 w-full px-space-xl pb-space-xl bg-surface flex-1">
+    <router-outlet />
+  </main>
+
+  @if (notificacao(); as aviso) {
+    <div class="fixed bottom-6 right-6 z-[60] w-[min(420px,calc(100vw-2rem))] bg-surface-container-lowest rounded-2xl shadow-[0_16px_48px_-8px_rgba(24,28,33,0.25)] ring-1 ring-surface-container p-space-lg flex items-start gap-space-md">
+      <div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+        <span class="material-symbols-outlined text-[20px]">{{ aviso.tipo === 'acao' ? 'check_circle' : 'auto_awesome' }}</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="font-label-lg text-label-lg font-bold text-on-surface">{{ aviso.titulo }}</p>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">{{ aviso.mensagem }}</p>
+        @if (aviso.detalhe) {
+          <p class="font-body-sm text-body-sm text-outline mt-1">{{ aviso.detalhe }}</p>
+        }
+      </div>
+      <button type="button" aria-label="Fechar notificação" (click)="auditoria.limparNotificacao()" class="text-outline hover:text-on-surface transition-colors">
+        <span class="material-symbols-outlined text-[18px]">close</span>
+      </button>
+    </div>
+  }
+</div>
