@@ -28,7 +28,6 @@ public class CampanhaRepository {
     return metricas;
   }
 
-  /** Fila priorizada: menor ICO primeiro (critérios desempate pelo código). */
   public List<CampanhaResumo> listarResumosOrdenados() {
     return campanhas.values().stream()
         .sorted(Comparator.comparingInt(Campanha::ico).thenComparing(Campanha::id))

@@ -1,0 +1,29 @@
+# Controle de versao e IDE
+.git
+.gitignore
+.idea
+.vscode
+*.iml
+
+# Artefatos gerados localmente (reconstruidos dentro da imagem)
+**/node_modules
+**/dist
+**/target
+**/.angular
+**/coverage
+**/out
+**/out-tsc
+backend/src/main/resources/static
+*.tsbuildinfo
+
+# Logs e segredos locais — a API key deve ser passada via -e/--env-file
+*.log
+.env
+.env.*
+!.env.example
+
+# Documentacao e scripts locais (nao necessarios no contexto de build)
+README.md
+frontend/README.md
+build.sh
+run.sh

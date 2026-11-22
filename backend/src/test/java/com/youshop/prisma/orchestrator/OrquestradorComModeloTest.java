@@ -24,7 +24,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.test.web.servlet.MockMvc;
 
-/** Prova que o orquestrador usa o Structured Outputs do ChatClient quando ele está disponível. */
 @SpringBootTest
 @AutoConfigureMockMvc
 class OrquestradorComModeloTest {

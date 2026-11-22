@@ -13,12 +13,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * Cria o {@link ChatClient} somente quando {@code OPENAI_API_KEY} está definida.
- *
- * <p>Não usamos o starter de modelo: sua auto-configuração exige uma chave já no boot, o que
- * impediria a demo de rodar no ambiente de avaliação sem credenciais.
- */
+/** ChatClient condicional: o starter exigiria chave no boot e quebraria a demo sem credenciais. */
 @Configuration
 public class AiChatClientConfiguration {
 

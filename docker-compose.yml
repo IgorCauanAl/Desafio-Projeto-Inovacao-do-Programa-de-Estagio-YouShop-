@@ -1,0 +1,17 @@
+services:
+  youshop-prisma:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: youshop-prisma:local
+    container_name: youshop-prisma
+    # A porta do container e sempre 8080; HOST_PORT define a porta no host.
+    ports:
+      - "${HOST_PORT:-8080}:8080"
+    environment:
+      # Sem chave, o orquestrador usa o fallback deterministico (sem chamadas externas).
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      # Opcional: modelo usado quando a chave esta definida.
+      YOUSHOP_AI_OPENAI_MODEL: ${YOUSHOP_AI_OPENAI_MODEL:-gpt-4o-mini}
+      TZ: ${TZ:-UTC}
+    restart: unless-stopped

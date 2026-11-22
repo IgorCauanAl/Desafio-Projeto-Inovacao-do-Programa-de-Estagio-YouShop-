@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Etapa 5 - build unificado: Angular -> static/ do Spring Boot -> JAR unico.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

@@ -9,10 +9,7 @@ import com.youshop.prisma.domain.ResumoEvidencia;
 import com.youshop.prisma.domain.StatusCampanha;
 import java.util.List;
 
-/**
- * Contratos brutos do seed. O {@code RawTicket} carrega PII de propósito para que o
- * módulo LGPD seja exercitado antes de qualquer dado seguir para o Orquestrador/MCP.
- */
+/** Contratos brutos do seed: mantêm PII para exercitar a sanitização LGPD. */
 public final class RawSeed {
 
   private RawSeed() {}

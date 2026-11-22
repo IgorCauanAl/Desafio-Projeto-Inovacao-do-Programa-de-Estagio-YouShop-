@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Etapa 5 - executa o JAR unico com o limite de memoria definido no desafio.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

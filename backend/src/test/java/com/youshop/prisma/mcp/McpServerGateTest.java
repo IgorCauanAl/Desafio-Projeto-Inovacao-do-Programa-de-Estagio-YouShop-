@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
-/** Evidências automatizadas do Gate 3: inicialização, registro e chamada das 3 tools MCP. */
 @SpringBootTest
 class McpServerGateTest {
 

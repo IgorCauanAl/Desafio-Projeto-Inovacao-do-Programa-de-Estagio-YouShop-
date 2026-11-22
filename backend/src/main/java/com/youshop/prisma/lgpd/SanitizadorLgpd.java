@@ -9,13 +9,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;
 
-/**
- * Sanitizador determinístico (LGPD): substitui PII por tokens fixos usando {@link Pattern} e
- * omite os campos sensíveis na conversão para o DTO público {@link Ticket}.
- *
- * <p>Nenhum método aleatório é usado: a mesma entrada sempre produz a mesma saída, o que permite
- * testes unitários estáveis e auditoria do pipeline.
- */
+/** Substitui PII por tokens e omite campos sensíveis antes de qualquer ferramenta ou IA. */
 @Component
 public class SanitizadorLgpd {
 
@@ -43,7 +37,6 @@ public class SanitizadorLgpd {
     return texto == null ? null : PADRAO_TELEFONE.matcher(texto).replaceAll(TOKEN_TELEFONE);
   }
 
-  /** Mascara ocorrências do nome exato informado, ignorando caixa. */
   public String mascaraNome(String texto, String nome) {
     if (texto == null || nome == null || nome.isBlank()) {
       return texto;
@@ -53,7 +46,7 @@ public class SanitizadorLgpd {
         .replaceAll(TOKEN_NOME);
   }
 
-  /** Aplica todas as máscaras em texto livre (ordem fixa para determinismo). */
+  /** Ordem fixa garante sanitização determinística. */
   public String sanitizarTexto(String texto, String nome) {
     if (texto == null) {
       return null;
@@ -64,14 +57,9 @@ public class SanitizadorLgpd {
     return mascaraNome(resultado, nome);
   }
 
-  /**
-   * Converte o ticket bruto no DTO público. Os campos {@code nomeComprador}, {@code cpf},
-   * {@code email} e {@code telefone} ficam de fora do record retornado (omissão estrutural).
-   */
+  /** Ticket público sem campos de PII (omissão estrutural). */
   public Ticket sanitizar(RawSeed.Ticket bruto) {
     String mensagem = sanitizarTexto(bruto.mensagem(), bruto.nomeComprador());
-
-    // Rede de segurança: se o seed acrescentar PII em outro campo de texto, ele também é varrido.
     String categoria = sanitizarTexto(bruto.categoria(), bruto.nomeComprador());
 
     return new Ticket(bruto.id(), bruto.tempo(), mensagem, categoria, bruto.icone());

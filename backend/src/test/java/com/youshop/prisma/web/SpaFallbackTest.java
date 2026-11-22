@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-/** Gate 5: deep links da SPA devem cair no index.html servido pelo proprio JAR. */
 @SpringBootTest
 @AutoConfigureMockMvc
 class SpaFallbackTest {

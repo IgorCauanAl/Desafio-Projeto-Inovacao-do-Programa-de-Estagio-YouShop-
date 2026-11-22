@@ -23,12 +23,7 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeType;
 
-/**
- * Orquestra o fluxo ingestão sanitizada -> ferramentas MCP -> ChatClient multimodal -> ICO.
- *
- * <p>Quando {@code OPENAI_API_KEY} não está configurada, a última etapa usa umfallback
- * determinístico que cruza os mesmos dados MCP e preserva o ICO pré-processado do seed.
- */
+/** Ingestão sanitizada -> ferramentas MCP -> ChatClient -> ICO, com fallback determinístico. */
 @Service
 public class OrquestradorAuditoriaService {
 

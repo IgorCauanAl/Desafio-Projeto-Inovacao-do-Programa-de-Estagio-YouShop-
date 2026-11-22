@@ -11,13 +11,7 @@ import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Component;
 
-/**
- * Ferramentas MCP de consulta isolada por domínio (Creator, Produtor, Comprador).
- *
- * <p>Os contratos de entrada e saída são Java {@code records} imutáveis. Todo dado exposto já passou
- * pelo sanitizador LGPD na ingestão: os tickets não contêm nome, CPF, e-mail ou telefone do
- * comprador.
- */
+/** Ferramentas MCP sobre evidências já sanitizadas na ingestão. */
 @Component
 public class FerramentasMcp {
 
@@ -115,7 +109,7 @@ public class FerramentasMcp {
         .orElseThrow(() -> new NoSuchElementException("Campanha não encontrada: " + campanhaId));
   }
 
-  /** Divide a transcrição em segmentos determinísticos, sem qualquer chamada externa. */
+  /** Segmentação determinística, sem chamada externa. */
   private static List<String> segmentar(String transcricao) {
     String limpa =
         transcricao

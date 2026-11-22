@@ -2,7 +2,6 @@ package com.youshop.prisma.domain;
 
 import java.util.List;
 
-/** Resultado auditável de uma reanálise disparada pelo endpoint de auditoria. */
 public record ReprocessamentoResult(
     String campanhaId,
     int ico,
