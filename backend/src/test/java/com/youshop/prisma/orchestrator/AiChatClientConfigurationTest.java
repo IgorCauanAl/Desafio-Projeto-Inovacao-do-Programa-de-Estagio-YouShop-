@@ -10,7 +10,7 @@ class AiChatClientConfigurationTest {
   @Test
   void criaChatClientComSchemaEstruturadoSemChamarOModelo() {
     ChatClient chatClient =
-        new AiChatClientConfiguration().chatClient("sk-chave-de-teste", "gpt-4o-mini");
+        new AiChatClientConfiguration().chatClient("chave-gemini-de-teste", "gemini-flash-lite-latest");
 
     assertThat(chatClient).isNotNull();
   }

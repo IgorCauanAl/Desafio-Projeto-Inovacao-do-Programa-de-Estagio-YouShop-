@@ -57,7 +57,7 @@ class OrquestradorComModeloTest {
         .perform(post("/api/auditoria/CMP-8492/reprocessar"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.ico").value(41))
-        .andExpect(jsonPath("$.origem").value("chatclient-multimodal-openai"))
+        .andExpect(jsonPath("$.origem").value("chatclient-multimodal-gemini"))
         .andExpect(jsonPath("$.resumoCausaRaiz", containsString("modelo multimodal")));
 
     verify(spec).toolCallbacks(any(ToolCallback[].class));

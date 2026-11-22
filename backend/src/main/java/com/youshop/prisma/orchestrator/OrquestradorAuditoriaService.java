@@ -85,7 +85,7 @@ public class OrquestradorAuditoriaService {
 
     boolean modeloDisponivel = chatClientProvider.getIfAvailable() != null;
     DiagnosticoICOResult diagnostico = consolidar(campanha, promessa, regras, sinais);
-    String origem = modeloDisponivel ? "chatclient-multimodal-openai" : "fallback-deterministico";
+    String origem = modeloDisponivel ? "chatclient-multimodal-gemini" : "fallback-deterministico";
 
     log.info(
         "[orchestrator] ICO consolidado para #{} = {}% (escopo={}, prazo={}, preco={}, origem={})",
@@ -124,7 +124,7 @@ public class OrquestradorAuditoriaService {
       Campanha campanha, PromessaMidia promessa, RegrasProduto regras, SinaisSuporte sinais) {
     ChatClient chatClient = chatClientProvider.getIfAvailable();
     if (chatClient == null) {
-      log.info("[orchestrator] OPENAI_API_KEY ausente: fallback determinístico sobre dados MCP");
+      log.info("[orchestrator] GEMINI_API_KEY ausente: fallback determinístico sobre dados MCP");
       return fallback(campanha, promessa, regras, sinais);
     }
 

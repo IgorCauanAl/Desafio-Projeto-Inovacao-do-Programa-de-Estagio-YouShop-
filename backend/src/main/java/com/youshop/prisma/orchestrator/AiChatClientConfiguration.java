@@ -13,15 +13,21 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/** ChatClient condicional: o starter exigiria chave no boot e quebraria a demo sem credenciais. */
+/**
+ * ChatClient condicional: o starter exigiria chave no boot e quebraria a demo sem credenciais.
+ * Usa o endpoint compatível com OpenAI do Gemini, portanto mantém o starter openai sem chamar a OpenAI.
+ */
 @Configuration
 public class AiChatClientConfiguration {
 
+  private static final String GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai";
+  private static final String GEMINI_COMPLETIONS_PATH = "/chat/completions";
+
   @Bean
-  @ConditionalOnExpression("'${OPENAI_API_KEY:}' != ''")
+  @ConditionalOnExpression("'${GEMINI_API_KEY:}' != ''")
   ChatClient chatClient(
-      @Value("${OPENAI_API_KEY}") String apiKey,
-      @Value("${youshop.ai.openai.model:gpt-4o-mini}") String model) {
+      @Value("${GEMINI_API_KEY}") String apiKey,
+      @Value("${youshop.ai.gemini.model:gemini-flash-lite-latest}") String model) {
 
     String schema = JsonSchemaGenerator.generateForType(DiagnosticoICOResult.class);
 
@@ -43,7 +49,12 @@ public class AiChatClientConfiguration {
 
     OpenAiChatModel chatModel =
         OpenAiChatModel.builder()
-            .openAiApi(OpenAiApi.builder().apiKey(apiKey).build())
+            .openAiApi(
+                OpenAiApi.builder()
+                    .apiKey(apiKey)
+                    .baseUrl(GEMINI_BASE_URL)
+                    .completionsPath(GEMINI_COMPLETIONS_PATH)
+                    .build())
             .defaultOptions(options)
             .toolCallingManager(DefaultToolCallingManager.builder().build())
             .build();

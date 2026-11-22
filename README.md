@@ -22,10 +22,10 @@ Os dados deste repositório são **sintéticos e de demonstração**: um seed co
    - `consultarRegrasProduto` — formato, prazo de acesso, garantia e valor oficial a partir do SKU;
    - `consultarSinaisSuporte` — volume de chamados, tickets sanitizados e T.M.R.
 4. **Orquestração da reauditoria.** `POST /api/auditoria/{id}/reprocessar` chama o `OrquestradorAuditoriaService`, que executa as três ferramentas, monta um prompt somente com evidências sanitizadas e, quando há chave de API, envia texto + mídia (`image/jpeg`) ao `ChatClient` com `temperature=0`, tool callbacks e **Structured Outputs** no formato `DiagnosticoICOResult` (JSON Schema).
-5. **Fallback determinístico.** Se `OPENAI_API_KEY` não estiver definida — ou se a chamada ao modelo falhar — o orquestrador cruza os mesmos dados MCP com regras fixas e preserva o ICO do seed. O campo `origem` da resposta diz `chatclient-multimodal-openai` ou `fallback-deterministico`, garantindo rastreabilidade.
+5. **Fallback determinístico.** Se `GEMINI_API_KEY` não estiver definida — ou se a chamada ao modelo falhar — o orquestrador cruza os mesmos dados MCP com regras fixas e preserva o ICO do seed. O campo `origem` da resposta diz `chatclient-multimodal-gemini` ou `fallback-deterministico`, garantindo rastreabilidade.
 6. **Decisão.** `POST /api/auditoria/{id}/acao` registra a ação com evidência, timestamp e novo status; a interface exibe a notificação correspondente.
 
-> A chave da IA **não** fica no `application.properties`. Ela é lida da variável de ambiente `OPENAI_API_KEY` em `AiChatClientConfiguration`; sem ela, o bean `ChatClient` sequer é criado. Veja a seção [Configuração da IA](#configuração-da-ia).
+> A chave da IA **não** fica no `application.properties`. Ela é lida da variável de ambiente `GEMINI_API_KEY` em `AiChatClientConfiguration`; sem ela, o bean `ChatClient` sequer é criado. O `ChatClient` usa o endpoint compatível com OpenAI do Gemini (`https://generativelanguage.googleapis.com/v1beta/openai`), então a OpenAI não é chamada. Veja a seção [Configuração da IA](#configuração-da-ia).
 
 ## Arquitetura: monolito modular em camadas
 
@@ -65,7 +65,7 @@ Camadas e responsabilidades:
 | --- | --- | --- |
 | Backend | Java 21, Spring Boot 3.5.16, Spring Web MVC | API REST, servidor embutido, injeção de dependências. |
 | IA / MCP | Spring AI 1.1.8 — MCP Server WebMVC/SSE, `ChatClient`, Tool Calling, Structured Outputs | Ferramentas auditáveis, chamada multimodal e resposta validada por JSON Schema. |
-| Modelo | OpenAI `gpt-4o-mini` (opcional) | Consolidação do diagnóstico quando a chave está disponível. |
+| Modelo | Gemini `gemini-flash-lite-latest` (free, opcional) | Consolidação do diagnóstico quando a chave está disponível. |
 | Serialização | Jackson | Leitura do seed e JSON da API. |
 | Build backend | Maven 3.9, Spring Boot Maven Plugin | Empacotamento do JAR executável. |
 | Frontend | Angular 22.2, TypeScript 6.0, RxJS 7.8 | SPA standalone, lazy loading, reatividade com Signals. |
@@ -126,14 +126,14 @@ A credencial é fornecida apenas por variável de ambiente:
 ```bash
 # Docker Compose
 cp .env.example .env
-# descomente e preencha: OPENAI_API_KEY=sk-...
+# descomente e preencha: GEMINI_API_KEY=...
 docker compose up -d --build
 
 # Docker puro
-docker run --rm -p 8080:8080 -e OPENAI_API_KEY='sk-...' youshop-prisma:local
+docker run --rm -p 8080:8080 -e GEMINI_API_KEY='...' youshop-prisma:local
 
 # Execução local
-export OPENAI_API_KEY='sk-...'
+export GEMINI_API_KEY='...'
 ./run.sh
 ```
 
@@ -141,8 +141,8 @@ Variáveis disponíveis:
 
 | Variável | Padrão | Finalidade |
 | --- | --- | --- |
-| `OPENAI_API_KEY` | vazia | Habilita o `ChatClient`; sem ela, usa o fallback determinístico. |
-| `YOUSHOP_AI_OPENAI_MODEL` | `gpt-4o-mini` | Modelo usado quando a chave está definida. |
+| `GEMINI_API_KEY` | vazia | Habilita o `ChatClient` no Gemini; sem ela, usa o fallback determinístico. |
+| `YOUSHOP_AI_GEMINI_MODEL` | `gemini-flash-lite-latest` | Modelo Gemini free usado quando a chave está definida. |
 | `HOST_PORT` | `8080` | Porta publicada no host pelo Compose. |
 | `TZ` | `UTC` | Fuso horário do container. |
 
