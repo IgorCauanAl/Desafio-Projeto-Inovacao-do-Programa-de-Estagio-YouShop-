@@ -13,10 +13,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * ChatClient condicional: o starter exigiria chave no boot e quebraria a demo sem credenciais.
- * Usa o endpoint compatível com OpenAI do Gemini, portanto mantém o starter openai sem chamar a OpenAI.
- */
+/** ChatClient condicional via Gemini compatível com OpenAI; sem chave, usa fallback. */
 @Configuration
 public class AiChatClientConfiguration {
 

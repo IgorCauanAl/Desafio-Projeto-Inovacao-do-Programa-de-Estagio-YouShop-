@@ -9,9 +9,8 @@ services:
     ports:
       - "${HOST_PORT:-8080}:8080"
     environment:
-      # Sem chave, o orquestrador usa o fallback deterministico (sem chamadas externas).
+      # Sem chave, o orquestrador usa o fallback deterministico.
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
-      # Modelo Gemini free usado quando a chave esta definida.
       YOUSHOP_AI_GEMINI_MODEL: ${YOUSHOP_AI_GEMINI_MODEL:-gemini-flash-lite-latest}
       TZ: ${TZ:-UTC}
     restart: unless-stopped

@@ -47,7 +47,7 @@
       <artifactId>spring-ai-starter-mcp-server-webmvc</artifactId>
     </dependency>
 
-    <!-- Etapa 4: ChatClient multimodal + Structured Outputs (sem starter para nao exigir API Key no boot). -->
+    <!-- ChatClient + Structured Outputs sem starter para nao exigir chave no boot. -->
     <dependency>
       <groupId>org.springframework.ai</groupId>
       <artifactId>spring-ai-client-chat</artifactId>
